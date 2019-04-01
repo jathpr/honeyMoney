@@ -1,0 +1,11 @@
+<div *ngIf="(getPos$ | async) as pos; else loading" class="container">
+  <button class="scan" 
+  routerLink="/set_price"
+ >Scan User</button> 
+</div>
+
+<ng-template #loading>
+    <div class="container">
+      Loading POS...
+      </div>
+</ng-template>

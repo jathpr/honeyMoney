@@ -1,0 +1,25 @@
+.container {
+    text-align:center;
+    // width: 300px;
+    // margin: auto;
+}
+
+.prices__container {
+    display: flex;
+    justify-content: center;
+}
+
+.prices__list {
+    list-style-type: none;
+    padding-inline-start: 0;
+    margin: 20px;
+}
+
+.prices__button {
+    width: 100%;
+    margin: 2px;
+}
+
+.clear__button {
+    width: 200px;
+}
