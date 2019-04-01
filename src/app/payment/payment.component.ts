@@ -2,15 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../session.service';
 
 @Component({
-  selector: 'app-scan-customer',
-  templateUrl: './scan-customer.component.html',
-  styleUrls: ['./scan-customer.component.scss']
+  selector: 'app-payment',
+  templateUrl: './payment.component.html',
+  styleUrls: ['./payment.component.scss']
 })
-export class ScanCustomerComponent implements OnInit {
+export class PaymentComponent implements OnInit {
 
   constructor(private sessionService: SessionService) { }
 
+  ownerName: string
+
   ngOnInit() {
+    
   }
 
 }

@@ -1,0 +1,12 @@
+<div class="container">
+    <div>{{sessionService.getPrice()}}</div>
+    <div>Owner is {{ownerName}}</div>
+    <button class="pay"  *ngIf="sessionService.chkCash(); else elseBlock"
+    routerLink="/payment"
+   >Pay</button> 
+   <ng-template #elseBlock>No money No honey</ng-template>
+   <br>
+   <button class="back" 
+    routerLink="/set_price"
+   >Back</button> 
+  </div>

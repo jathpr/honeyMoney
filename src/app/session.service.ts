@@ -43,4 +43,7 @@ export class SessionService {
     return this.currentPrice;
   }
 
+  chkCash(): boolean {
+    return true
+  }
 }

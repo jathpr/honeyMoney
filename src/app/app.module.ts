@@ -9,6 +9,7 @@ import { SetPriceComponent } from './set-price/set-price.component';
 
 import { FormsModule } from '@angular/forms';
 import { ScanCustomerComponent } from './scan-customer/scan-customer.component';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ScanCustomerComponent } from './scan-customer/scan-customer.component';
     ScanPosComponent,
     ScanUserComponent,
     SetPriceComponent,
-    ScanCustomerComponent
+    ScanCustomerComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
