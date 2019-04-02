@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { delay, tap, catchError } from 'rxjs/operators';
 
 import { Employee } from "./employee";
 import { Customer } from "./customer";
 import { Pos } from './pos';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -25,18 +29,21 @@ export class SessionService {
 
   fetchPos(): Observable<Pos> {
     return this.http.get<Pos>(this.possUrl).pipe(
+      catchError(this.handleError<Pos>('fetchPos', new Pos())),
       tap(poss => {this.pos = poss[0]})
     );
   }
 
   fetchUser(): Observable<Employee> {
     return this.http.get<Employee>(this.employeesUrl).pipe(
+      catchError(this.handleError<Employee>('fetchUser', new Employee())),
       tap(employees => {this.employee = employees[0]})
     );
   }
 
   fetchCustomer(): Observable<Customer> {
     return this.http.get<Customer>(this.customerUrl).pipe(
+      catchError(this.handleError<Customer>('fetchCustomer', new Customer())),
       tap(customer => {this.customer = customer})
     );
   }
@@ -50,10 +57,16 @@ export class SessionService {
   }
 
   pay(cash: number):  Observable<number> {
-    this.customer.credits -= cash; // but on server
-    return of(this.customer.credits).pipe(
-      delay(400)
-    )
+    return this.http.put(this.customerUrl, {...this.customer, credits: this.customer.credits - cash}, httpOptions).pipe(
+      catchError(this.handleError<any>('pay'))
+    );
+  }
+
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(`in time of ${operation} get error ${error}`); 
+      return of(result as T);
+    };
   }
 
 }
