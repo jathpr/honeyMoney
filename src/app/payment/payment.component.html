@@ -12,6 +12,9 @@
         <ng-template #anotherBlock>Earn another {{pricesService.getPrice() - customer.credits}}, you lazy idiot</ng-template>
     </ng-template>
    <br>
+        <button class="back"  *ngIf="isPaid"
+        (click)="undoPay()"
+       >Unpay</button> 
    <button class="back" 
     routerLink="/set_price"
    >Back</button> 

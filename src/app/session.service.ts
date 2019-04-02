@@ -58,7 +58,15 @@ export class SessionService {
 
   pay(cash: number):  Observable<number> {
     return this.http.put(this.customerUrl, {...this.customer, credits: this.customer.credits - cash}, httpOptions).pipe(
-      catchError(this.handleError<any>('pay'))
+      catchError(this.handleError<any>('pay')),
+      tap(() => {this.customer.credits = this.customer.credits - cash,   console.log(this.customer)})
+    );
+  }
+
+  undoPay(cash: number):  Observable<number> {
+    return this.http.put(this.customerUrl, {...this.customer, credits: this.customer.credits + cash}, httpOptions).pipe(
+      catchError(this.handleError<any>('undoPay')),
+      tap(() => {this.customer.credits = this.customer.credits + cash,   console.log(this.customer)})
     );
   }
 

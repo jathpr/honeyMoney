@@ -24,4 +24,8 @@ export class PaymentComponent implements OnInit {
   pay() {
     this.sessionService.pay(this.pricesService.getPrice()).subscribe(() => { this.isPaid = true })
   }
+  
+  undoPay() {
+    this.sessionService.undoPay(this.pricesService.getPrice()).subscribe(() => { this.isPaid = false })
+  }
 }
