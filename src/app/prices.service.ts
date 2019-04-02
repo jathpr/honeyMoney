@@ -11,14 +11,14 @@ export class PricesService {
   constructor(private sessionService: SessionService) {}
 
   private currentPrice
+  private PRICE_LIST = [100,300,500,5000]
   pay$: Observable<number>;
 
-  getPrices(): Observable<number[]> {
-    if (this.sessionService.getUser())
-    return of([100,300,500,1000]).pipe(
-      delay(9)
-    );
-    return of([100,300,500,5000])
+  getPrices(): number[] {
+    let priceList = this.sessionService.getPriceList()
+    if (priceList)
+      return priceList
+    return this.PRICE_LIST
   }
 
   pay(price: number): void {

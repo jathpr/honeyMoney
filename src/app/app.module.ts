@@ -11,6 +11,10 @@ import { FormsModule } from '@angular/forms';
 import { ScanCustomerComponent } from './scan-customer/scan-customer.component';
 import { PaymentComponent } from './payment/payment.component';
 
+import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { ServerService }  from './server.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +27,10 @@ import { PaymentComponent } from './payment/payment.component';
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    HttpClientModule,
+    AppRoutingModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      ServerService, { dataEncapsulation: false })
   ],
   providers: [],
   bootstrap: [AppComponent]

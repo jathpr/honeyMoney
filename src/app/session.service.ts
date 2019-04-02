@@ -3,51 +3,55 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 
-import { User } from "./user";
+import { Employee } from "./employee";
 import { Customer } from "./customer";
+import { Pos } from './pos';
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
 
-  private user: User
-  private customer: Customer
+  private employee = new Employee()
+  private customer = new Customer()
+  private pos = new Pos()
+  private employeesUrl = 'api/employees';
+  private customerUrl = 'api/customers/6';
+  private possUrl = 'api/poss';
 
-  constructor() { this.user = new User()}
+  constructor( private http: HttpClient ) {}
 
-  fetchPos(): Observable<number> {
-    return of(8).pipe(
-      delay(900),
-      tap(id => {this.user.posId = id})
+  fetchPos(): Observable<Pos> {
+    return this.http.get<Pos>(this.possUrl).pipe(
+      tap(poss => {this.pos = poss[0]})
     );
   }
 
-  fetchUser(): Observable<number> {
-    return of(17).pipe(
-      delay(9),
-      tap(id => {this.user.userId = id})
+  fetchUser(): Observable<Employee> {
+    return this.http.get<Employee>(this.employeesUrl).pipe(
+      tap(employees => {this.employee = employees[0]})
     );
   }
 
   fetchCustomer(): Observable<Customer> {
-    this.customer = {id:33, name: "Jon Bol", cash: 3500}
-    return of(this.customer).pipe(
-      delay(9)
+    return this.http.get<Customer>(this.customerUrl).pipe(
+      tap(customer => {this.customer = customer})
     );
   }
 
-  getUser(): User {
-    console.log(this.user.userId )
-    console.log(this.user.posId )
-    if (this.user.userId && this.user.posId)
-      return this.user
+  getPriceList(): [number] {
+    console.log(this.pos )
+    console.log(this.employee )
+    if (this.pos && this.pos.priceList && this.pos.priceList.length)
+      return this.pos.priceList
     return null
   }
 
   pay(cash: number):  Observable<number> {
-    this.customer.cash -= cash; // but on server
-    return of(this.customer.cash).pipe(
+    this.customer.credits -= cash; // but on server
+    return of(this.customer.credits).pipe(
       delay(400)
     )
   }

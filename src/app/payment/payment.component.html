@@ -5,11 +5,11 @@
         Jobs Done
     </div>
     <ng-template #payBlock>
-        <button class="pay"  *ngIf="pricesService.chkCash(customer.cash); else elseBlock"
+        <button class="pay"  *ngIf="pricesService.chkCash(customer.credits); else elseBlock"
         (click)="pay()"
         >Pay</button> 
         <ng-template #elseBlock>No money No honey</ng-template>
-        <ng-template #anotherBlock>Earn another {{pricesService.getPrice() - customer.cash}}, you lazy idiot</ng-template>
+        <ng-template #anotherBlock>Earn another {{pricesService.getPrice() - customer.credits}}, you lazy idiot</ng-template>
     </ng-template>
    <br>
    <button class="back" 

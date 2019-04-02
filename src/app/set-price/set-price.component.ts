@@ -12,11 +12,11 @@ export class SetPriceComponent implements OnInit {
 
   constructor(private sessionService: SessionService, private pricesService: PricesService) { }
 
-  prices$: Observable<number[]>;
-  totalPrice: number = 0;
+  prices: number[]
+  totalPrice: number = 0
 
   ngOnInit() {
-    this.sessionService.fetchUser().subscribe(() => {this.prices$ = this.pricesService.getPrices()})
+    this.sessionService.fetchUser().subscribe(() => {this.prices = this.pricesService.getPrices()})
   }
 
   add(price: number) {

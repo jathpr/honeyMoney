@@ -17,7 +17,7 @@ export class PaymentComponent implements OnInit {
   isPaid: boolean = false
 
   ngOnInit() {
-    this.sessionService.fetchCustomer().subscribe(hi => {this.customer = hi})
+    this.sessionService.fetchCustomer().subscribe(hi => {this.customer = hi, console.log(hi)})
   }
 
 

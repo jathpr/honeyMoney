@@ -1,4 +1,4 @@
-<div *ngIf="(prices$ | async) as prices; else loading" class="container">
+<div *ngIf="prices; else loading" class="container">
     <input class="price__input" [(ngModel)]="totalPrice" placeholder="price"/>
     <button (click)="pay()" routerLink="/scan_customer">
         pay
@@ -6,7 +6,7 @@
 
       <div class="prices__container">
       <ul class="prices__list">
-          <li *ngFor="let price of prices$ | async" >
+          <li *ngFor="let price of prices" >
             <button class="prices__button" (click)="add(-price)">
               -{{price}}
             </button>
@@ -14,7 +14,7 @@
         </ul>
 
     <ul class="prices__list">
-        <li *ngFor="let price of prices$ | async" >
+        <li *ngFor="let price of prices" >
           <button class="prices__button" (click)="add(price)">
             +{{price}}
           </button>
