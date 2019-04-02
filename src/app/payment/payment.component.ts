@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../session.service';
+import { PricesService } from '../prices.service';
+
+import { Customer } from "../customer";
 
 @Component({
   selector: 'app-payment',
@@ -8,12 +11,17 @@ import { SessionService } from '../session.service';
 })
 export class PaymentComponent implements OnInit {
 
-  constructor(private sessionService: SessionService) { }
+  constructor(private sessionService: SessionService, private pricesService: PricesService) { }
 
-  ownerName: string
+  customer: Customer
+  isPaid: boolean = false
 
   ngOnInit() {
-    
+    this.sessionService.fetchCustomer().subscribe(hi => {this.customer = hi})
   }
 
+
+  pay() {
+    this.sessionService.pay(this.pricesService.getPrice()).subscribe(() => { this.isPaid = true })
+  }
 }

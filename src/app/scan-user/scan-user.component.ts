@@ -11,10 +11,10 @@ export class ScanUserComponent implements OnInit {
 
   constructor(private sessionService: SessionService) {}
 
-  getPos$: Observable<number>;
+  pos$: Observable<number>;
 
   ngOnInit() {
-    this.getPos$ = this.sessionService.getPos()
+    this.pos$ = this.sessionService.fetchPos()
   }
 
 }

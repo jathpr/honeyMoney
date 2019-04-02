@@ -1,10 +1,16 @@
-<div class="container">
-    <div>{{sessionService.getPrice()}}</div>
-    <div>Owner is {{ownerName}}</div>
-    <button class="pay"  *ngIf="sessionService.chkCash(); else elseBlock"
-    routerLink="/payment"
-   >Pay</button> 
-   <ng-template #elseBlock>No money No honey</ng-template>
+<div *ngIf="customer" class="container">
+    <div>{{pricesService.getPrice()}}</div>
+    <div>Owner is {{customer.name}}</div>
+    <div *ngIf="isPaid; else payBlock">
+        Jobs Done
+    </div>
+    <ng-template #payBlock>
+        <button class="pay"  *ngIf="pricesService.chkCash(customer.cash); else elseBlock"
+        (click)="pay()"
+        >Pay</button> 
+        <ng-template #elseBlock>No money No honey</ng-template>
+        <ng-template #anotherBlock>Earn another {{pricesService.getPrice() - customer.cash}}, you lazy idiot</ng-template>
+    </ng-template>
    <br>
    <button class="back" 
     routerLink="/set_price"

@@ -1,5 +1,4 @@
-<div *ngIf="(getUser$ | async) as user; else loading" class="container">
-<div *ngIf="(prices$ | async) as prices; else loading">
+<div *ngIf="(prices$ | async) as prices; else loading" class="container">
     <input class="price__input" [(ngModel)]="totalPrice" placeholder="price"/>
     <button (click)="pay()" routerLink="/scan_customer">
         pay
@@ -26,9 +25,8 @@
       <button class="clear__button" (click)="clear()">
           clear
         </button>
-
-  </div>
 </div>
+
   <ng-template #loading>
       <div class="container">
         Loading User...

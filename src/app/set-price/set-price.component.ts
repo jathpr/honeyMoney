@@ -10,15 +10,13 @@ import { Observable } from 'rxjs';
 })
 export class SetPriceComponent implements OnInit {
 
-  constructor(private sessionService: SessionService) { }
+  constructor(private sessionService: SessionService, private pricesService: PricesService) { }
 
   prices$: Observable<number[]>;
-  getUser$: Observable<number>;
   totalPrice: number = 0;
 
   ngOnInit() {
-    this.prices$ = this.sessionService.getPrices()
-    this.getUser$ = this.sessionService.getUser()
+    this.sessionService.fetchUser().subscribe(() => {this.prices$ = this.pricesService.getPrices()})
   }
 
   add(price: number) {
@@ -31,7 +29,7 @@ export class SetPriceComponent implements OnInit {
 
   pay() {
     if (this.totalPrice > 0)
-      this.sessionService.pay(this.totalPrice);
+      this.pricesService.pay(this.totalPrice);
   }
 
 }

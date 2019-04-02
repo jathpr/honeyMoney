@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PricesService } from '../prices.service';
 import { SessionService } from '../session.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { SessionService } from '../session.service';
 })
 export class ScanCustomerComponent implements OnInit {
 
-  constructor(private sessionService: SessionService) { }
+  constructor(private sessionService: SessionService, private pricesService: PricesService) { }
 
   ngOnInit() {
   }

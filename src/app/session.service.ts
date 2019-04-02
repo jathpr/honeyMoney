@@ -3,47 +3,53 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 
-import { PricesService } from './prices.service';
+import { User } from "./user";
+import { Customer } from "./customer";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
 
-  private posIndex: number
-  private userIndex: number
-  private currentPrice
-  pay$: Observable<number>;
+  private user: User
+  private customer: Customer
 
-  constructor(private pricesService: PricesService) { }
+  constructor() { this.user = new User()}
 
-  getPos(): Observable<number> {
+  fetchPos(): Observable<number> {
     return of(8).pipe(
       delay(900),
-      tap(id => {this.posIndex = id})
+      tap(id => {this.user.posId = id})
     );
   }
 
-  getUser(): Observable<number> {
+  fetchUser(): Observable<number> {
     return of(17).pipe(
       delay(9),
-      tap(id => {this.userIndex = id})
+      tap(id => {this.user.userId = id})
     );
   }
 
-  getPrices(): Observable<number[]> {
-    return this.pricesService.getPrices(this.posIndex, this.userIndex)
+  fetchCustomer(): Observable<Customer> {
+    this.customer = {id:33, name: "Jon Bol", cash: 3500}
+    return of(this.customer).pipe(
+      delay(9)
+    );
   }
 
-  pay(price: number): void {
-    this.currentPrice = price
+  getUser(): User {
+    console.log(this.user.userId )
+    console.log(this.user.posId )
+    if (this.user.userId && this.user.posId)
+      return this.user
+    return null
   }
 
-  getPrice(): number {
-    return this.currentPrice;
+  pay(cash: number):  Observable<number> {
+    this.customer.cash -= cash; // but on server
+    return of(this.customer.cash).pipe(
+      delay(400)
+    )
   }
 
-  chkCash(): boolean {
-    return true
-  }
 }
