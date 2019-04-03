@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../session.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-scan-pos',
@@ -8,9 +9,13 @@ import { SessionService } from '../session.service';
 })
 export class ScanPosComponent implements OnInit {
 
-  constructor(private sessionService: SessionService) { }
+  constructor(private sessionService: SessionService, private router: Router) { }
 
   title = 'honeyMoney';
+
+  navigate(){
+    this.sessionService.fetchPos().subscribe(() => {this.router.navigate(['scan_user'])})
+  }
   
   ngOnInit() {
   }
